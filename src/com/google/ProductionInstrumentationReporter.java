@@ -76,6 +76,10 @@ public class ProductionInstrumentationReporter {
     }
   }
 
+  private static float roundFloat2Decimals(float num) {
+    return (Math.round(num * 10000) / (float) 100);
+  }
+
   /**
    * The class contains the data which is provided by the Production Instrumentation pass in the
    * closure compiler. It will read the data from the file name created with the
@@ -140,8 +144,8 @@ public class ProductionInstrumentationReporter {
         temp[0] = Base64VLQ.decode(encodedDetailsAsCharIt); // Index in list this.fileNames
         temp[1] = Base64VLQ.decode(encodedDetailsAsCharIt); // Index in list this.functionNames
         temp[2] = Base64VLQ.decode(encodedDetailsAsCharIt); // Index in list this.types
-        temp[3] = Base64VLQ.decode(encodedDetailsAsCharIt); // LineNo
-        temp[4] = Base64VLQ.decode(encodedDetailsAsCharIt); // ColNo
+        temp[3] = Base64VLQ.decode(encodedDetailsAsCharIt); // Line number
+        temp[4] = Base64VLQ.decode(encodedDetailsAsCharIt); // Column number
 
         parameterMapping.putIfAbsent(unqiueParam, temp);
       }
@@ -173,10 +177,10 @@ public class ProductionInstrumentationReporter {
      * the predicate. As an example, it can return a list of all unique parameters which match a
      * specific file name.
      */
-    private List<String> getAllMatchingValues(Predicate<String> comparisonPreicate) {
+    private List<String> getAllMatchingValues(Predicate<String> comparisonPredicate) {
       List<String> result = new ArrayList<>();
       for (String key : parameterMapping.keySet()) {
-        if (comparisonPreicate.test(key)) {
+        if (comparisonPredicate.test(key)) {
           result.add(key);
         }
       }
@@ -187,7 +191,7 @@ public class ProductionInstrumentationReporter {
 
   /**
    * The instrumentation will send the report in a JSON format where the JSON is a dictionary of the
-   * encoded params to an object of the data collected. Initially this will just be the frequency
+   * encoded params to an object of the data collected. Initially this will just be the frequency.
    */
   private static class ProfilingData {
 
@@ -235,6 +239,60 @@ public class ProductionInstrumentationReporter {
   }
 
   /**
+   * A class that maintains aggregate information which will be converted to a JSON.
+   */
+  private static class AggregateProfilingResults {
+
+    int totalReportsParsed;
+    float percentOfFunctionsExecuted;
+    float percentOfBranchesExecuted;
+
+    List<ProfilingResultByFile> result;
+
+    public AggregateProfilingResults(int totalReportsParsed, List<ProfilingResultByFile> result) {
+      this.totalReportsParsed = totalReportsParsed;
+      this.result = result;
+
+      getPercentOfInstrumentationExecuted();
+    }
+
+    /**
+     * Iterates over the result property and calculates what percent out of all functions and
+     * branches where executed to get aggregated instrumentation data.
+     */
+    private void getPercentOfInstrumentationExecuted() {
+      int totalFunctions = 0;
+      int totalFunctionsExecuted = 0;
+      int totalBranches = 0;
+      int totalBranchesExecuted = 0;
+
+      for (ProfilingResultByFile profilingResultByFile : result) {
+        for (String key : profilingResultByFile.profilingDataPerFunction.keySet()) {
+          List<ProfilingResult> listOfProfilingResult = profilingResultByFile.profilingDataPerFunction
+              .get(key);
+          for (ProfilingResult profilingResult : listOfProfilingResult) {
+            if (profilingResult.type == InstrumentationType.FUNCTION) {
+              totalFunctions++;
+              if (profilingResult.executed != 0) {
+                totalFunctionsExecuted++;
+              }
+            } else {
+              totalBranches++;
+              if (profilingResult.executed != 0) {
+                totalBranchesExecuted++;
+              }
+            }
+          }
+        }
+      }
+      percentOfFunctionsExecuted = roundFloat2Decimals(
+          (float) totalFunctionsExecuted / totalFunctions);
+      percentOfBranchesExecuted = roundFloat2Decimals(
+          (float) totalBranchesExecuted / totalBranches);
+    }
+  }
+
+  /**
    * This function reads a file at the given filePath and converts the contents into a string.
    */
   private static String readFile(String filePath) throws IOException {
@@ -248,7 +306,6 @@ public class ProductionInstrumentationReporter {
     }
     String fileAsString = sb.toString();
     return fileAsString;
-
   }
 
   /**
@@ -284,7 +341,7 @@ public class ProductionInstrumentationReporter {
         String functionName = instrumentationMapping.getFunctionName(param);
 
         float executionAverage = 0;
-        float averageFrequency = 0; // Have frequency be float to maintain accuracy
+        int averageFrequency = 0;
         int runningAverageCounter = 0;
 
         // For each param, iterate over allInstrumentationReports and check if param is present.
@@ -293,20 +350,17 @@ public class ProductionInstrumentationReporter {
           ProfilingData profilingData = instrumentationData.get(param);
           runningAverageCounter++;
           if (profilingData != null) {
-            // 1 for true means this param was executed, 0 otherwise
-            executionAverage += ((1 - executionAverage) / runningAverageCounter);
-            averageFrequency += ((profilingData.frequency - averageFrequency)
-                / runningAverageCounter);
-          } else {
-            executionAverage += ((0 - executionAverage) / runningAverageCounter);
-            averageFrequency += ((0 - averageFrequency) / runningAverageCounter);
+            // if executed, add 1 to executionAverage, and 0 otherwise.
+            averageFrequency += profilingData.frequency;
+            executionAverage++;
           }
         }
 
         ProfilingResult profilingResult = new ProfilingResult(instrumentationMapping, param);
         // Round the executionAverage to 2 decimal places for simplicity.
-        profilingResult.executed = (Math.round(executionAverage * 10000)/(float) 100);
-        profilingResult.data = new ProfilingData(Math.round(averageFrequency));
+        profilingResult.executed = roundFloat2Decimals(executionAverage / runningAverageCounter);
+        profilingResult.data = new ProfilingData(
+            Math.round((float) averageFrequency / runningAverageCounter));
 
         if (profilingDataPerFunction.containsKey(functionName)) {
           profilingDataPerFunction.get(functionName).add(profilingResult);
@@ -378,7 +432,11 @@ public class ProductionInstrumentationReporter {
     List<ProfilingResultByFile> profilingResults = createProfilingResult(instrumentationMapping,
         listOfExecutionResults);
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    createFile("finalResult.json", gson.toJson(profilingResults));
+
+    AggregateProfilingResults aggregateProfilingResults = new AggregateProfilingResults(
+        listOfExecutionResults.size(), profilingResults);
+
+    createFile("finalResult.json", gson.toJson(aggregateProfilingResults));
 
   }
 }
