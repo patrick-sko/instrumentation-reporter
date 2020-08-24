@@ -138,7 +138,7 @@ public class ProfilingReport {
    * Iterates over the result property and calculates what percent out of all functions and branches
    * where executed to get aggregated instrumentation data.
    */
-  private float calculatePercentOfInstrumentationExecuted(
+  private static float calculatePercentOfInstrumentationExecuted(
       List<Map<String, List<ProfilingResult>>> result,
       Predicate<InstrumentationType> instrumentationTypeCheck) {
     int totalInstrumentationPoints = 0;

@@ -124,7 +124,7 @@ public class InstrumentationMapping {
   public int getLineNo(String id) {
     return parameterMapping.get(id).lineNo();
   }
-p
+
   public int getColNo(String id) {
     return parameterMapping.get(id).colNo();
   }
