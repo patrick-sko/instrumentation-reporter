@@ -7,7 +7,7 @@
       "fileName": "js/base.js",
       "percentOfFunctionsExecuted": 0.0,
       "percentOfBranchesExecuted": 1.41,
-      "profilingDataPerFunction": {
+      "profilingResultPerFunction": {
         "goog.getUid": [
           {
             "param": "2N",
@@ -6986,7 +6986,7 @@
       "fileName": "InstrumentCode.js",
       "percentOfFunctionsExecuted": 100.0,
       "percentOfBranchesExecuted": 40.0,
-      "profilingDataPerFunction": {
+      "profilingResultPerFunction": {
         "Anonymous": [
           {
             "param": "mqB",
@@ -7077,7 +7077,7 @@
       "fileName": "js/model.js",
       "percentOfFunctionsExecuted": 80.77,
       "percentOfBranchesExecuted": 83.87,
-      "profilingDataPerFunction": {
+      "profilingResultPerFunction": {
         "module$contents$wordsearch$model_populateWithRandomChars": [
           {
             "param": "kvB",
@@ -8016,39 +8016,7 @@
       "fileName": "js/view.js",
       "percentOfFunctionsExecuted": 100.0,
       "percentOfBranchesExecuted": 100.0,
-      "profilingDataPerFunction": {
-        "module$exports$wordsearch$view.View.prototype.drawGameBoard": [
-          {
-            "param": "kwB",
-            "type": "BRANCH",
-            "lineNo": 54,
-            "colNo": 6,
-            "executed": 100.0,
-            "data": {
-              "frequency": 33300
-            }
-          },
-          {
-            "param": "owB",
-            "type": "FUNCTION",
-            "lineNo": 50,
-            "colNo": 2,
-            "executed": 100.0,
-            "data": {
-              "frequency": 333
-            }
-          },
-          {
-            "param": "mwB",
-            "type": "BRANCH",
-            "lineNo": 53,
-            "colNo": 4,
-            "executed": 100.0,
-            "data": {
-              "frequency": 3330
-            }
-          }
-        ],
+      "profilingResultPerFunction": {
         "module$exports$wordsearch$view.View.prototype.redraw": [
           {
             "param": "iwB",
@@ -8090,6 +8058,50 @@
             "executed": 100.0,
             "data": {
               "frequency": 4
+            }
+          }
+        ],
+        "module$contents$wordsearch$view_getViewHeight": [
+          {
+            "param": "4vB",
+            "type": "FUNCTION",
+            "lineNo": 12,
+            "colNo": 0,
+            "executed": 100.0,
+            "data": {
+              "frequency": 1
+            }
+          }
+        ],
+        "module$exports$wordsearch$view.View.prototype.drawGameBoard": [
+          {
+            "param": "kwB",
+            "type": "BRANCH",
+            "lineNo": 54,
+            "colNo": 6,
+            "executed": 100.0,
+            "data": {
+              "frequency": 33300
+            }
+          },
+          {
+            "param": "owB",
+            "type": "FUNCTION",
+            "lineNo": 50,
+            "colNo": 2,
+            "executed": 100.0,
+            "data": {
+              "frequency": 333
+            }
+          },
+          {
+            "param": "mwB",
+            "type": "BRANCH",
+            "lineNo": 53,
+            "colNo": 4,
+            "executed": 100.0,
+            "data": {
+              "frequency": 3330
             }
           }
         ],
@@ -8151,18 +8163,6 @@
             }
           }
         ],
-        "module$contents$wordsearch$view_getViewHeight": [
-          {
-            "param": "4vB",
-            "type": "FUNCTION",
-            "lineNo": 12,
-            "colNo": 0,
-            "executed": 100.0,
-            "data": {
-              "frequency": 1
-            }
-          }
-        ],
         "module$exports$wordsearch$view.View.prototype.init": [
           {
             "param": "ywB",
@@ -8181,19 +8181,7 @@
       "fileName": "js/controller.js",
       "percentOfFunctionsExecuted": 100.0,
       "percentOfBranchesExecuted": 80.0,
-      "profilingDataPerFunction": {
-        "module$contents$wordsearch$controller_playGame": [
-          {
-            "param": "kyB",
-            "type": "FUNCTION",
-            "lineNo": 140,
-            "colNo": 0,
-            "executed": 100.0,
-            "data": {
-              "frequency": 1
-            }
-          }
-        ],
+      "profilingResultPerFunction": {
         "module$contents$wordsearch$controller_Controller.prototype.onMouseMove": [
           {
             "param": "uxB",
@@ -8223,6 +8211,84 @@
             "executed": 100.0,
             "data": {
               "frequency": 328
+            }
+          }
+        ],
+        "Anonymous": [
+          {
+            "param": "+xB",
+            "type": "FUNCTION",
+            "lineNo": 157,
+            "colNo": 39,
+            "executed": 100.0,
+            "data": {
+              "frequency": 5
+            }
+          },
+          {
+            "param": "iyB",
+            "type": "FUNCTION",
+            "lineNo": 163,
+            "colNo": 37,
+            "executed": 100.0,
+            "data": {
+              "frequency": 5
+            }
+          },
+          {
+            "param": "gyB",
+            "type": "FUNCTION",
+            "lineNo": 160,
+            "colNo": 39,
+            "executed": 100.0,
+            "data": {
+              "frequency": 2202
+            }
+          }
+        ],
+        "module$contents$wordsearch$controller_getWord": [
+          {
+            "param": "yxB",
+            "type": "FUNCTION",
+            "lineNo": 117,
+            "colNo": 0,
+            "executed": 100.0,
+            "data": {
+              "frequency": 4
+            }
+          },
+          {
+            "param": "wxB",
+            "type": "BRANCH",
+            "lineNo": 119,
+            "colNo": 2,
+            "executed": 100.0,
+            "data": {
+              "frequency": 24
+            }
+          }
+        ],
+        "module$contents$wordsearch$controller_Controller": [
+          {
+            "param": "0wB",
+            "type": "FUNCTION",
+            "lineNo": 16,
+            "colNo": 2,
+            "executed": 100.0,
+            "data": {
+              "frequency": 1
+            }
+          }
+        ],
+        "module$contents$wordsearch$controller_playGame": [
+          {
+            "param": "kyB",
+            "type": "FUNCTION",
+            "lineNo": 140,
+            "colNo": 0,
+            "executed": 100.0,
+            "data": {
+              "frequency": 1
             }
           }
         ],
@@ -8298,38 +8364,6 @@
             }
           }
         ],
-        "Anonymous": [
-          {
-            "param": "+xB",
-            "type": "FUNCTION",
-            "lineNo": 157,
-            "colNo": 39,
-            "executed": 100.0,
-            "data": {
-              "frequency": 5
-            }
-          },
-          {
-            "param": "iyB",
-            "type": "FUNCTION",
-            "lineNo": 163,
-            "colNo": 37,
-            "executed": 100.0,
-            "data": {
-              "frequency": 5
-            }
-          },
-          {
-            "param": "gyB",
-            "type": "FUNCTION",
-            "lineNo": 160,
-            "colNo": 39,
-            "executed": 100.0,
-            "data": {
-              "frequency": 2202
-            }
-          }
-        ],
         "module$contents$wordsearch$controller_Controller.prototype.onMouseDown": [
           {
             "param": "6wB",
@@ -8359,28 +8393,6 @@
             "executed": 100.0,
             "data": {
               "frequency": 5
-            }
-          }
-        ],
-        "module$contents$wordsearch$controller_getWord": [
-          {
-            "param": "yxB",
-            "type": "FUNCTION",
-            "lineNo": 117,
-            "colNo": 0,
-            "executed": 100.0,
-            "data": {
-              "frequency": 4
-            }
-          },
-          {
-            "param": "wxB",
-            "type": "BRANCH",
-            "lineNo": 119,
-            "colNo": 2,
-            "executed": 100.0,
-            "data": {
-              "frequency": 24
             }
           }
         ],
@@ -8435,26 +8447,14 @@
               "frequency": 1
             }
           }
-        ],
-        "module$contents$wordsearch$controller_Controller": [
-          {
-            "param": "0wB",
-            "type": "FUNCTION",
-            "lineNo": 16,
-            "colNo": 2,
-            "executed": 100.0,
-            "data": {
-              "frequency": 1
-            }
-          }
         ]
       }
     },
     {
       "fileName": "js/main.js",
       "percentOfFunctionsExecuted": 100.0,
-      "percentOfBranchesExecuted": 0.0,
-      "profilingDataPerFunction": {
+      "percentOfBranchesExecuted": 100.0,
+      "profilingResultPerFunction": {
         "module$contents$wordsearch$main_main": [
           {
             "param": "myB",

@@ -39,12 +39,12 @@ import java.util.function.Predicate;
  * --instrument_mapping_report and is required to follow the format used by Closure Compiler class
  * VariableMap.
  */
-public class InstrumentationMapping {
+final class InstrumentationMapping {
 
-  ImmutableList<String> fileNames;
-  ImmutableMap<String, Location> parameterMapping;
+  final ImmutableList<String> fileNames;
+  final ImmutableMap<String, Location> parameterMapping;
 
-  private InstrumentationMapping(ImmutableList<String> fileNames, ImmutableMap parameterMapping) {
+  private InstrumentationMapping(ImmutableList<String> fileNames,  ImmutableMap<String, Location> parameterMapping) {
     this.fileNames = fileNames;
     this.parameterMapping = parameterMapping;
   }
