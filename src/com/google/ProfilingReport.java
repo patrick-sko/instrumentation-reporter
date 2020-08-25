@@ -160,7 +160,7 @@ final class ProfilingReport {
 
   /**
    * Iterates over the result property and calculates what percent out of all functions and branches
-   * where executed to get aggregated instrumentation data.
+   * were executed to get aggregated instrumentation data.
    */
   private static float calculatePercentOfInstrumentationExecuted(
       List<Map<String, List<ProfilingResult>>> result,
